@@ -244,7 +244,7 @@ INNER JOIN expeditions ex ON e.id = ex.id_entrepot_source
 WHERE DATEDIFF(NOW(), ex.date_expedition) <= 30;
 ```
 
-![[entrepots_envoie_10_last_days.png]]
+![entrepots_envoie_10_last_days.png](./assets/entrepots_envoie_10_last_days.png)
 
 ### 4.9 Afficher les entrepôts qui ont reçu des expéditions au cours des 30 derniers jours
 
@@ -256,7 +256,7 @@ FROM entrepots e
 INNER JOIN expeditions ex ON e.id = ex.id_entrepot_destination
 WHERE DATEDIFF(NOW(), ex.date_expedition) <= 30;
 ```
-![[entrepots_recu_exp_30_last_day.png]]
+![entrepots_recu_exp_30_last_day.png](./assets/entrepots_recu_exp_30_last_day.png)
 ### 4.10 Afficher les expéditions qui ont été livrées dans un délai de moins de 5 jours ouvrables
 
 La dernière requête identifie les expéditions qui ont été livrées dans un délai de moins de 5 jours ouvrables. Elle examine la table expeditions, filtre les expéditions avec le statut "Livrée" et utilise la fonction DATEDIFF() pour calculer le délai.
@@ -266,7 +266,7 @@ SELECT *
 FROM expeditions
 WHERE statut = 'Livrée' AND DATEDIFF(date_expedition, NOW()) <= 5;
 ```
-![[expeditions_livree_5_last_days.png]]
+![expeditions_livree_5_last_days.png](./assets/expeditions_livree_5_last_days.png)
 
 ## <a name="5"></a>5. Requêtes complexes
 
@@ -295,7 +295,7 @@ INNER JOIN entrepots source ON ex.id_entrepot_source = source.id
 INNER JOIN entrepots destination ON ex.id_entrepot_destination = destination.id
 WHERE source.pays = destination.pays;
 ```
-![[entrepot_envoie_meme_pays.png]]
+![entrepot_envoie_meme_pays.png](./assets/entrepot_envoie_meme_pays.png)
 ### 5.3 Afficher les entrepôts qui ont envoyé des expéditions à destination d'un entrepôt situé dans un pays différent
 
 Cette requête affiche les entrepôts qui ont envoyé des expéditions à destination d'un entrepôt situé dans un pays différent. Elle compare le pays de l'entrepôt source avec le pays de l'entrepôt de destination.
@@ -307,7 +307,7 @@ INNER JOIN entrepots source ON ex.id_entrepot_source = source.id
 INNER JOIN entrepots destination ON ex.id_entrepot_destination = destination.id
 WHERE source.pays != destination.pays;
 ```
-![[entrepot_envoie_pas_meme_pays.png]]
+![entrepot_envoie_pas_meme_pays.png](./assets/entrepot_envoie_pas_meme_pays.png)
 ### 5.4 Afficher les expéditions en transit initiées par un entrepôt situé dans un pays dont le nom commence par la lettre "F" et pesant plus de 500 kg
 
 Cette requête affiche les expéditions en transit initiées par un entrepôt situé dans un pays dont le nom commence par la lettre "F" et pesant plus de 500 kg.
@@ -330,7 +330,7 @@ INNER JOIN entrepots source ON ex.id_entrepot_source = source.id
 INNER JOIN entrepots destination ON ex.id_entrepot_destination = destination.id
 GROUP BY source.pays, destination.pays;
 ```
-![[expeditions_combi.png]]
+![expeditions_combi.png](./assets/expeditions_combi.png)
 ### 5.6 Afficher les entrepôts qui ont envoyé des expéditions au cours des 30 derniers jours et dont le poids total des expéditions est supérieur à 1000 kg
 
 Cette requête affiche les entrepôts qui ont envoyé des expéditions au cours des 30 derniers jours et dont le poids total des expéditions est supérieur à 1000 kg. Elle combine les entrepôts et les expéditions, filtre les données par date et poids, puis effectue une agrégation pour calculer le poids total.
@@ -366,7 +366,7 @@ GROUP BY date
 ORDER BY date DESC;
 ```
 
-![[expeditions_ce_mois.png]]
+![expeditions_ce_mois.png](./assets/expeditions_ce_mois.png)
 ## <a name="6"></a>6. TSQL
 
 ### 6.1 Créer une vue qui affiche les informations pour chaque entrepôt : nom de l'entrepôt, adresse complète, nombre d'expéditions envoyées au cours des 30 derniers jours.
@@ -381,7 +381,7 @@ LEFT JOIN expeditions ex ON e.id = ex.id_entrepot_source
 WHERE DATEDIFF(CURDATE(), ex.date_expedition) <= 30
 GROUP BY e.id, e.nom_entrepot, e.adresse, e.ville, e.pays;
 ```
-![[vue_entrepot.png]]
+![vue_entrepot.png](./assets/vue_entrepot.png)
 ### 6.2 Créer une procédure stockée qui prend en entrée l'ID d'un entrepôt et renvoie le nombre total d'expéditions envoyées par cet entrepôt au cours du dernier mois.
 
 Cette procédure stockée accepte l'ID d'un entrepôt en entrée et renvoie le nombre total d'expéditions envoyées par cet entrepôt au cours du dernier mois. Elle effectue une requête sur la table expeditions, filtrant les expéditions par ID d'entrepôt source et par date d'expédition au cours du dernier mois.
@@ -399,7 +399,7 @@ END //
 
 DELIMITER ;
 ```
-![[stored_procedure.png]]
+![stored_procedure.png](./assets/stored_procedure.png)
 ### 6.3 Créer une fonction qui prend en entrée une date et renvoie le nombre total d'expéditions livrées ce jour-là.
 
 Cette fonction prend une date en entrée et renvoie le nombre total d'expéditions livrées ce jour-là. Elle utilise une variable pour stocker le nombre total, puis effectue une requête sur la table expeditions, filtrant les expéditions par date et par statut "Livrée".
@@ -432,7 +432,7 @@ CREATE TABLE clients (
     pays VARCHAR(255)
 );
 ```
-
+![Create table clients](./assets/create_table_client.png)
 ### 7.2 Créer une table de jointure "expeditions_clients"
 
 Cette requête crée une table de jointure nommée "expeditions_clients" pour gérer les relations entre les expéditions et les clients. Elle contient deux colonnes, id_expedition et id_client, qui sont des clés étrangères faisant référence aux tables "expeditions" et "clients", respectivement. Cette table permet d'associer chaque expédition à un client.
@@ -445,7 +445,7 @@ CREATE TABLE expeditions_clients (
     FOREIGN KEY (id_client) REFERENCES clients(id)
 );
 ```
-
+![Create table expeditions clients](./assets/create_table_exp_client.png)
 ### 7.3 Modifier la table "expeditions" pour ajouter la colonne "id_client"
 
 Cette requête modifie la table "expeditions" en ajoutant une nouvelle colonne nommée "id_client". Cette colonne est définie comme une clé étrangère qui fait référence à la table "clients". Ainsi, chaque expédition peut être associée à un client spécifique.
