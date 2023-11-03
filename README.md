@@ -17,7 +17,7 @@ La base de données utilisée est `transport_logistique`.
 CREATE DATABASE transport_logistique;
 USE transport_logistique;
 ```
-![Creation de la base de donnée](create_database.png)
+![Creation de la base de donnée](./assets/create_database.png)
 
 ### Table "entrepots"
 
@@ -39,7 +39,7 @@ CREATE TABLE entrepots (
 );
 ```
 
-![Creation de la table entrepot](create_table_entrepot.png)
+![Creation de la table entrepot](./assets/create_table_entrepot.png)
 
 ### Table "expeditions"
 
@@ -66,7 +66,7 @@ CREATE TABLE expeditions (
     FOREIGN KEY (id_entrepot_destination) REFERENCES entrepots(id)
 );
 ```
-![Creation table expedition](create_table_expeditions.png)
+![Creation table expedition](./assets/create_table_expeditions.png)
 
 ## <a name="2"></a>2. Insertion de données
 
@@ -82,7 +82,7 @@ INSERT INTO entrepots (nom_entrepot, adresse, ville, pays) VALUES
     ('Entrepot D', '10 Downing Street', 'London', 'UK'),
     ('Entrepot E', '1600 Pennsylvania Avenue NW', 'Washington D.C.', 'USA');
 ```
-![Insertion des données dans entrepot](insert_entrepot.png)
+![Insertion des données dans entrepot](./assets/insert_entrepot.png)
 ### Table "expeditions"
 
 Les données suivantes sont insérées dans la table "expeditions". Chaque ligne représente une expédition avec sa date, l'identifiant de l'entrepôt source, l'identifiant de l'entrepôt de destination, le poids de l'expédition et son statut.
@@ -100,7 +100,7 @@ INSERT INTO expeditions (date_expedition, id_entrepot_source, id_entrepot_destin
     ('2023-10-09', 4, 1, 250.00, 'En transit'),
     ('2023-10-10', 5, 2, 300.00, 'En transit');
 ```
-![Insertion des données dans expeditions](insert_expedition.png)
+![Insertion des données dans expeditions](./assets/insert_expedition.png)
 
 ## <a name="3"></a>3. Requêtes simples
 
@@ -111,7 +111,7 @@ Cette requête affiche toutes les informations sur tous les entrepôts.
 ```sql
 SELECT * FROM entrepots;
 ```
-![Selection des données des entrepots](select_entrepots.png)
+![Selection des données des entrepots](./assets/select_entrepots.png)
 ### 3.2 Afficher toutes les expéditions
 
 Cette requête affiche toutes les informations sur toutes les expéditions.
@@ -119,7 +119,7 @@ Cette requête affiche toutes les informations sur toutes les expéditions.
 ```sql
 SELECT * FROM expeditions;
 ```
-![Selection des données des expeditions](image.png)
+![Selection des données des expeditions](./assets/image.png)
 ### 3.3 Afficher toutes les expéditions en transit
 
 Cette requête affiche toutes les informations sur les expéditions qui sont actuellement en transit.
@@ -127,7 +127,7 @@ Cette requête affiche toutes les informations sur les expéditions qui sont act
 ```sql
 SELECT * FROM expeditions WHERE statut = 'En transit';
 ```
-![Selection des expeditions En Transit](selection_expeditions_transit.png)
+![Selection des expeditions En Transit](./assets/selection_expeditions_transit.png)
 ### 3.4 Afficher toutes les expéditions livrées
 
 Cette requête affiche toutes les informations sur les expéditions qui ont été livrées.
@@ -135,7 +135,7 @@ Cette requête affiche toutes les informations sur les expéditions qui ont ét�
 ```sql
 SELECT * FROM expeditions WHERE statut = 'Livrée';
 ```
-![Selection des expeditions Livrées](selection_expeditions_livree.png)
+![Selection des expeditions Livrées](./assets/selection_expeditions_livree.png)
 ## <a name="4"></a>4. Requêtes avancées
 
 ### 4.1 Afficher les entrepôts qui ont envoyé au moins une expédition en transit
@@ -148,7 +148,7 @@ FROM entrepots e
 INNER JOIN expeditions ex ON e.id = ex.id_entrepot_source
 WHERE ex.statut = 'En transit';
 ```
-![Selection Entrepot Envoie Min 1 Transit](selection_entrepot_envoie_min1_transit.png)
+![Selection Entrepot Envoie Min 1 Transit](./assets/selection_entrepot_envoie_min1_transit.png)
 
 ### 4.2 Afficher les entrepôts qui ont reçu au moins une expédition en transit
 
@@ -160,7 +160,7 @@ FROM entrepots e
 INNER JOIN expeditions ex ON e.id = ex.id_entrepot_destination
 WHERE ex.statut = 'En transit';
 ```
-![Selection Entrepot Recu Min1 Transit](selection_entrepot_recois_min1_transit.png)
+![Selection Entrepot Recu Min1 Transit](./assets/selection_entrepot_recois_min1_transit.png)
 ### 4.3 Afficher les expéditions qui ont un poids supérieur à 100 kg et qui sont en transit
 
 La troisième requête identifie les expéditions en transit dont le poids est supérieur à 100 kg. Elle examine uniquement la table expeditions et applique des critères de filtrage pour trouver ces expéditions spécifiques.
@@ -170,7 +170,7 @@ SELECT *
 FROM expeditions
 WHERE statut = 'En transit' AND poids > 100;
 ```
-![Selectionne expeditions transit poid > 100](selection_expeditions_transit_poid_plus100.png)
+![Selectionne expeditions transit poid > 100](./assets/selection_expeditions_transit_poid_plus100.png)
 ### 4.4 Afficher le nombre d'expéditions envoyées par chaque entrepôt
 
 La requête suivante calcule le nombre d'expéditions envoyées par chaque entrepôt. Elle utilise une jointure gauche (LEFT JOIN) entre les tables entrepots et expeditions, puis agrège les données en comptant le nombre d'expéditions pour chaque entrepôt.
@@ -181,7 +181,7 @@ FROM entrepots e
 LEFT JOIN expeditions ex ON e.id = ex.id_entrepot_source
 GROUP BY e.id, e.nom_entrepot;
 ```
-![Selectionner entrepots et nombre expedition.](selection_entrepots_nombre_expedition.png)
+![Selectionner entrepots et nombre expedition.](./assets/selection_entrepots_nombre_expedition.png)
 ### 4.5 Afficher le nombre total d'expéditions en transit
 
 La cinquième requête détermine le nombre total d'expéditions en transit dans la base de données. Elle se concentre uniquement sur la table expeditions et compte le nombre d'expéditions avec le statut "En transit".
@@ -191,7 +191,7 @@ SELECT COUNT(*) AS nombre_total_expeditions_en_transit
 FROM expeditions
 WHERE statut = 'En transit';
 ```
-![Nombre expé transit](nombre_expe_transit.png)
+![Nombre expé transit](./assets/nombre_expe_transit.png)
 ### 4.6 Afficher le nombre total d'expéditions livrées
 
 La sixième requête détermine le nombre total d'expéditions qui ont été marquées comme "Livrée". Elle examine la table expeditions et compte le nombre d'expéditions avec le statut "Livrée".
@@ -201,7 +201,7 @@ SELECT COUNT(*) AS nombre_total_expeditions_livrees
 FROM expeditions
 WHERE statut = 'Livrée';
 ```
-![Nombre livrée](nombre_expe_livree.png)
+![Nombre livrée](./assets/nombre_expe_livree.png)
 
 --- 
 # Les données ont étés changés pour avoir de meilleurs résultats 
@@ -230,7 +230,7 @@ FROM expeditions
 WHERE YEAR(date_expedition) = YEAR(CURRENT_DATE)
 GROUP BY mois;
 ```
-![Nombre expe par mois](selection_nombre_expe_mois.png)
+![Nombre expe par mois](./assets/selection_nombre_expe_mois.png)
 
 
 ### 4.8 Afficher les entrepôts qui ont envoyé des expéditions au cours des 30 derniers jours
